@@ -1,0 +1,207 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+#define NUM_STATIONS 13
+#define NUM_DISTANCES 12
+
+const char* stations[NUM_STATIONS] = {
+    "Antipolo", "Marikina-Pasig", "Santolan", "Katipunan",
+    "Anonas", "Araneta Center-Cubao", "Betty Go-Belmonte", "Gilmore",
+    "J. Ruiz", "V. Mapa", "Pureza", "Legarda", "Recto"
+};
+
+const float distances[NUM_DISTANCES] = {
+    1.05, 1.389, 1.357, 1.234, 0.928, 1.075, 1.164, 1.438, 0.955, 1.97, 0.9, 0.7
+};
+
+const int stored_value_fares[NUM_STATIONS][NUM_STATIONS] = {
+    {0, 15, 20, 20, 20, 25, 25, 25, 25, 30, 30, 35, 35},
+    {15, 0, 15, 20, 20, 20, 25, 25, 25, 25, 30, 30, 35},
+    {20, 15, 0, 15, 20, 20, 20, 20, 25, 25, 30, 30, 30},
+    {20, 20, 15, 0, 15, 20, 20, 20, 20, 25, 25, 30, 30},
+    {20, 20, 20, 15, 0, 15, 20, 20, 20, 20, 25, 25, 30},
+    {25, 20, 20, 20, 15, 0, 15, 20, 20, 20, 25, 25, 30},
+    {25, 25, 20, 20, 20, 15, 0, 15, 20, 20, 20, 25, 25},
+    {25, 25, 20, 20, 20, 20, 15, 0, 15, 20, 20, 25, 25},
+    {25, 25, 25, 20, 20, 20, 20, 15, 0, 15, 20, 20, 25},
+    {30, 25, 25, 25, 20, 20, 20, 20, 15, 0, 20, 20, 25},
+    {30, 30, 30, 25, 25, 25, 20, 20, 20, 20, 0, 15, 20},
+    {35, 30, 30, 30, 25, 25, 25, 25, 20, 20, 15, 0, 20},
+    {35, 35, 30, 30, 30, 30, 25, 25, 25, 25, 20, 20, 0}
+};
+
+const int single_journey_fares[NUM_STATIONS][NUM_STATIONS] = {
+    {13, 15, 16, 18, 19, 21, 22, 23, 25, 26, 28, 31, 33},
+    {15, 13, 15, 17, 18, 19, 21, 22, 24, 25, 27, 29, 32},
+    {16, 15, 13, 15, 16, 18, 19, 20, 22, 23, 26, 28, 30},
+    {18, 17, 15, 13, 15, 16, 17, 19, 20, 22, 24, 26, 29},
+    {19, 18, 16, 15, 13, 14, 16, 17, 19, 20, 22, 24, 27},
+    {21, 19, 18, 16, 14, 13, 15, 16, 18, 19, 21, 23, 26},
+    {22, 21, 19, 17, 16, 15, 13, 15, 16, 18, 20, 22, 25},
+    {23, 22, 20, 19, 17, 16, 15, 13, 15, 16, 19, 21, 23},
+    {25, 24, 22, 20, 19, 18, 16, 15, 13, 14, 17, 19, 22},
+    {26, 25, 23, 22, 20, 19, 18, 16, 14, 13, 16, 18, 21},
+    {28, 27, 26, 24, 22, 21, 20, 19, 17, 16, 13, 15, 18},
+    {31, 29, 28, 26, 24, 23, 22, 21, 19, 18, 15, 13, 16},
+    {33, 32, 30, 29, 27, 26, 25, 23, 22, 21, 18, 16, 13}
+};
+
+typedef struct {
+    const char* type;
+    float discount;
+} Discount;
+
+const Discount discounts[] = {
+    {"regular", 0.0},
+    {"student", 0.20},
+    {"pwd", 0.30},
+    {"senior", 0.30}
+};
+
+const int num_discounts = sizeof(discounts) / sizeof(discounts[0]);
+
+char* get_card_type() {
+    char* card_type = malloc(20 * sizeof(char));
+    printf("\n♡ Select Passenger Type: Regular, Student, PWD/Senior ♡\n");
+    printf("\nʚ Enter Passenger Type: ");
+    scanf("%s", card_type);
+    for (int i = 0; card_type[i]; i++) {
+        card_type[i] = tolower(card_type[i]);
+    }
+    printf("\n﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌\n");
+    
+    int valid = 0;
+    while (!valid) {
+        for (int i = 0; i < num_discounts; i++) {
+            if (strcmp(card_type, discounts[i].type) == 0) {
+                valid = 1;
+                break;
+            }
+        }
+        if (!valid) {
+            printf("ʚ Enter Passenger Type: ");
+            scanf("%s", card_type);
+            for (int i = 0; card_type[i]; i++) {
+                card_type[i] = tolower(card_type[i]);
+            }
+            printf("\n﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌\n");
+        }
+    }
+    return card_type;
+}
+
+float calculate_fare(int start_idx, int end_idx, const int fare_matrix[NUM_STATIONS][NUM_STATIONS], float discount_rate) {
+    float fare = fare_matrix[start_idx][end_idx];
+    float discounted_fare = fare * (1 - discount_rate);
+    return discounted_fare;
+}
+
+int main() {
+    float total_distance = 0;
+    float total_fare = 0;
+    int total_stations_passed = 0;
+    char* card_type = get_card_type();
+    float discount_rate = 0;
+
+    for (int i = 0; i < num_discounts; i++) {
+        if (strcmp(card_type, discounts[i].type) == 0) {
+            discount_rate = discounts[i].discount;
+            break;
+        }
+    }
+
+    printf("\n♡ Select Card Type: Enter '1' for Beep Card or '2' Single Journey Ticket ♡\n");
+    char fare_type[2];
+    printf("\nʚ Enter Card Type: ");
+    scanf("%s", fare_type);
+    printf("\n﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌\n");
+
+    while (strcmp(fare_type, "1") != 0 && strcmp(fare_type, "2") != 0) {
+        printf("\n♡ Invalid choice. Try again. ♡\n");
+        printf("\nʚ Enter Card Type: ");
+        scanf("%s", fare_type);
+        printf("\n﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌\n");
+    }
+
+    const int (*fare_matrix)[NUM_STATIONS] = (strcmp(fare_type, "1") == 0) ? stored_value_fares : single_journey_fares;
+
+    printf("♡ List of Stations ♡\n");
+    printf("(Enter Number Only)\n\n");
+    for (int idx = 0; idx < NUM_STATIONS; idx++) {
+        printf("%d: %s\n", idx, stations[idx]);
+    }
+
+    printf("\n﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌\n");
+
+    int initial_station_idx;
+    while (1) {
+        printf("\nʚ Select Initial Station: ");
+        if (scanf("%d", &initial_station_idx) == 1 && initial_station_idx >= 0 && initial_station_idx < NUM_STATIONS) {
+            break;
+        } else {
+            printf("\n♡ Invalid station number. Please select a valid station number. ♡\n");
+            while (getchar() != '\n');
+        }
+    }
+
+    printf("\n» You are currently at %s station.\n", stations[initial_station_idx]);
+
+    while (1) {
+        int final_station_idx;
+        while (1) {
+            printf("\n﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌\n");
+            printf("\nʚ Select Final Station: ");
+            if (scanf("%d", &final_station_idx) == 1 && final_station_idx >= 0 && final_station_idx < NUM_STATIONS) {
+                if (final_station_idx != initial_station_idx) {
+                    break;
+                } else {
+                    printf("\n♡ Initial and final station cannot be the same. Please choose a different final station.♡\n");
+                }
+            } else {
+                printf("\n♡ Invalid station number. Please select a valid station number. ♡\n");
+                while (getchar() != '\n');
+            }
+        }
+
+        float fare = calculate_fare(initial_station_idx, final_station_idx, fare_matrix, discount_rate);
+        float distance = 0;
+        for (int i = (initial_station_idx < final_station_idx ? initial_station_idx : final_station_idx);
+             i < (initial_station_idx < final_station_idx ? final_station_idx : initial_station_idx);
+             i++) {
+            distance += distances[i];
+        }
+        int stations_passed = abs(final_station_idx - initial_station_idx);
+        
+        total_distance += distance;
+        total_fare += fare;
+        total_stations_passed += stations_passed;
+
+        printf("\nʚ Stations traveled: %s -> %s\n", stations[initial_station_idx], stations[final_station_idx]);
+        printf("ʚ Distance Traveled for this ride: %.2f km\n", distance);
+        printf("ʚ Fare for this ride: PHP %.2f\n", fare);
+        printf("\n» You have arrived at %s station.\n", stations[final_station_idx]);
+        printf("\n﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌﹌\n");
+
+        char ride_again[4];
+        printf("\n♡ Do you want to ride again? (yes/no): ");
+        scanf("%s", ride_again);
+        for (int i = 0; ride_again[i]; i++) {
+            ride_again[i] = tolower(ride_again[i]);
+        }
+        if (strcmp(ride_again, "yes") != 0) {
+            printf("\nʚ Total Distance Traveled: %.2f km\n", total_distance);
+            printf("ʚ Total Stations Passed: %d stations\n", total_stations_passed);
+            printf("ʚ Total Fare: PHP %.2f\n", total_fare);
+            printf("\n♡ Thank you for riding! ♡\n");
+            break;
+        }
+
+        initial_station_idx = final_station_idx;
+        printf("\n» You are currently at %s station.\n", stations[initial_station_idx]);
+    }
+
+    free(card_type);
+    return 0;
+}
