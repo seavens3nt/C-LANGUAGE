@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int isPalindrome(char str[]) {
+    int left = 0, right = strlen(str) - 1;
+
+    while (left < right) {
+        while (left < right && !isalnum(str[left])) left++;
+        while (left < right && !isalnum(str[right])) right--;
+
+        if (tolower(str[left]) != tolower(str[right]))
+            return 0;
+        left++;
+        right--;
+    }
+    return 1;
+}
+
+int main() {
+    char str[1000];
+    char choice;
+
+    do {
+        printf("────────────────────────୨ৎ────────────────────────\n");
+        printf("\n♡ Enter a string: ");
+        fgets(str, 1000, stdin);
+
+        if (isPalindrome(str))
+            printf("\nʚ The string is a palindrome.\n");
+        else
+            printf("\nʚ The string is not a palindrome.\n");
+
+        printf("\n────────────────────────୨ৎ────────────────────────\n");
+        printf("\n♡ Do you want to check another string? (y/n): ");
+        scanf(" %c", &choice);
+        getchar();
+
+    } while (choice == 'y' || choice == 'Y');
+
+    return 0;
+}
