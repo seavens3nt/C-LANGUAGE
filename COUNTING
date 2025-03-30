@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+void trimWhitespace(char str[]) {
+    int start = 0;
+    int end = strlen(str) - 1;
+
+    while (isspace((unsigned char)str[start])) start++;
+
+    while (end > start && isspace((unsigned char)str[end])) end--;
+
+    int length = end - start + 1;
+    memmove(str, str + start, length);
+    str[length] = '\0';
+}
+
+void countAlphaNumeric(char str[], int *alphabets, int *numbers) {
+    *alphabets = 0;
+    *numbers = 0;
+
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (isalpha(str[i])) (*alphabets)++;
+        else if (isdigit(str[i])) (*numbers)++;
+    }
+}
+
+int main() {
+    char str[1000];
+    char choice;
+    int alphabets, numbers;
+
+    do {
+        printf("────────────────────────୨ৎ────────────────────────\n");
+        printf("\n♡ Enter a string: ");
+        fgets(str, 1000, stdin);
+
+        str[strcspn(str, "\n")] = 0;
+
+        trimWhitespace(str);
+
+        if (strlen(str) == 0) {
+            printf("\nʚ Invalid input! Please enter a non-empty string.\n");
+        } else {
+
+            countAlphaNumeric(str, &alphabets, &numbers);
+
+            printf("\nʚ Number of alphabets: %d\n", alphabets);
+            printf("ʚ Number of numbers: %d\n", numbers);
+        }
+
+        printf("\n────────────────────────୨ৎ────────────────────────\n");
+        printf("\n♡ Do you want to count another string? (y/n): ");
+        scanf(" %c", &choice);
+        getchar();
+
+    } while (choice == 'y' || choice == 'Y');
+
+    return 0;
+}
