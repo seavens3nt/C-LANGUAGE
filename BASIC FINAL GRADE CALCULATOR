@@ -1,0 +1,57 @@
+#include <stdio.h>
+
+int main() {
+
+    float q1;
+    float q2;
+    float q3;
+    float a1;
+    float a2;
+    float lx;
+    float aSum;
+    float bSum;
+    float quiz;
+    float ass;
+    float longEx;
+    float finalGr;
+
+
+    printf("────────────────୨ৎ────────────────");
+    printf("\nʚ Enter your score in Quiz 1: ");
+    scanf("%f", &q1);
+    printf("ʚ Enter your score in Quiz 2: ");
+    scanf("%f", &q2);
+    printf("ʚ Enter your score in Quiz 3: ");
+    scanf("%f", &q3);
+    
+    aSum = q1 + q2 + q3;
+    quiz = ((aSum / 30) * 50 + 50) * 0.4;
+
+
+    printf("────────────────୨ৎ────────────────");
+    printf("\nʚ Enter your score in Assignment 1: ");
+    scanf("%f", &a1);
+    printf("ʚ Enter your score in Assignment 2: ");
+    scanf("%f", &a2);
+
+    bSum = a1 + a2;
+    ass = ((bSum / 20) * 50 + 50)* 0.1;
+
+
+    printf("────────────────୨ৎ────────────────");
+    printf("\nʚ Enter your score in the Long Exam: ");
+    scanf("%f", &lx);
+
+    longEx = ((lx / 50) * 50 + 50) * 0.5;
+
+
+    finalGr = quiz + ass + longEx;
+
+
+    printf("────────────────୨ৎ────────────────");
+    printf("\n♡ Your final grade is: %0.2f", finalGr);
+    printf("\n────────────────୨ৎ────────────────");
+    printf("\n            /ᐠ - ˕ -マ            ");
+
+    return 0;
+}
