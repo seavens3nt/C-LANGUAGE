@@ -1,0 +1,17 @@
+#include <stdio.h>
+
+int main() {
+
+char name[50];
+
+printf("\n⋆˚࿔ What is your name? 𝜗𝜚˚⋆\n");
+fgets(name, sizeof(name), stdin);
+
+printf("\nHello, %s", name);
+printf("Good day, %s /ᐠ - ˕ -マ\n", name);
+
+printf("\n𝜗𝜚 Name: %s", name);
+printf("𝜗𝜚 Block: COM246 \n");
+
+return 0;
+}
