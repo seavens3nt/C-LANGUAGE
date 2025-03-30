@@ -1,0 +1,42 @@
+#include <stdio.h>
+
+int main() {
+    float x, y, ans;
+    char operation;
+
+    printf("────────────────୨ৎ────────────────");
+    printf("\n౨ৎ Enter first number: ");
+    scanf("%f", &x);
+
+    printf("౨ৎ Enter second number: ");
+    scanf("%f", &y);
+
+    printf("\n────────────────୨ৎ────────────────");
+    printf("\nʚ What operation? ( +, -, /, * ): ");
+    scanf(" %c", &operation);
+
+    printf("\n────────────────୨ৎ────────────────");
+
+    if (operation == '+') {
+        ans = x + y;
+        printf("\nʚ The sum of the 2 numbers is: %.2f", ans);
+    } else if (operation == '-') {
+        ans = x - y;
+        printf("\nʚ The difference of the 2 numbers is: %.2f", ans);
+    } else if (operation == '/') {
+        if (y == 0) {
+            printf("\n౨ৎ Error! Division by zero is not allowed.");
+        } else {
+            ans = x / y;
+            printf("\nʚ The quotient of the 2 numbers is: %.2f", ans);
+        }
+    } else if (operation == '*') {
+        ans = x * y;
+        printf("\nʚ The product of the 2 numbers is: %.2f", ans);
+    } else {
+        printf("\n౨ৎ Sorry! Your input is invalid\n");
+        printf("\n/ᐠ ╥ ˕ ╥マ");
+    }
+
+    return 0;
+}
