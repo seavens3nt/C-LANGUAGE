@@ -1,0 +1,98 @@
+#include <stdio.h>
+
+int main() {
+    char motmot;
+    char fourth;
+    char third;
+
+    printf("────────────────୨ৎ────────────────");
+    printf("\n౨ৎ  Enter the initial of your birth month: ");
+    scanf(" %c", &motmot);
+
+    
+    if (motmot >= 'A' && motmot <= 'Z') {
+        motmot = motmot + ('a' - 'A');
+    }
+
+    if (motmot == 'f') {
+        
+        printf("────────────────୨ৎ────────────────");
+        printf("\nJʚ Your birth month is February");
+    } else if (motmot == 's') {
+        printf("────────────────୨ৎ────────────────");
+        printf("\nʚ Your birth month is September");
+    } else if (motmot == 'o') {
+        printf("────────────────୨ৎ────────────────");
+        printf("\nʚ Your birth month is October");
+    } else if (motmot == 'n') {
+        printf("────────────────୨ৎ────────────────");
+        printf("\nʚ Your birth month is November");
+    } else if (motmot == 'd') {
+        printf("────────────────୨ৎ────────────────");
+        printf("\nʚ Your birth month is December");
+    } else if (motmot == 'a') {
+        printf("────────────────୨ৎ────────────────");
+        printf("\n౨ৎ  Enter the fourth letter of your birth month: ");
+        scanf(" %c", &fourth);
+
+        switch (fourth) {
+            case 'i':
+                printf("────────────────୨ৎ────────────────");
+                printf("\nʚ Your birth month is April");
+                break;
+            case 'u':
+                printf("────────────────୨ৎ────────────────");
+                printf("\nʚ Your birth month is August");
+                break;
+            default:
+                printf("────────────────୨ৎ────────────────");
+                printf("\n౨ৎ Invalid input for the fourth letter.");
+        }
+    } else if (motmot == 'j') {
+        printf("────────────────୨ৎ────────────────");
+        printf("\n౨ৎ  Enter the fourth letter of your birth month: ");
+        scanf(" %c", &fourth);
+
+        switch (fourth) {
+            case 'n':
+                printf("────────────────୨ৎ────────────────");
+                printf("\nʚ Your birth month is January");
+                break;
+            case 'e':
+                printf("────────────────୨ৎ────────────────");
+                printf("\nʚ Your birth month is June");
+                break;
+            case 'y':
+                printf("────────────────୨ৎ────────────────");
+                printf("\nʚ Your birth month is July");
+                break;
+            default:
+                printf("────────────────୨ৎ────────────────");
+                printf("\n౨ৎ Sorry! Invalid input for the fourth letter.");
+        }
+    } else if (motmot == 'm') {
+        printf("────────────────୨ৎ────────────────");
+        printf("\n౨ৎ  Enter the third letter of your birth month: ");
+        scanf(" %c", &third);
+
+        switch (third) {
+            case 'y':
+                printf("────────────────୨ৎ────────────────");
+                printf("\nʚ Your birth month is May");
+                break;
+            case 'r':
+                printf("────────────────୨ৎ────────────────");
+                printf("\nʚ Your birth month is March");
+                break;
+            default:
+                printf("────────────────୨ৎ────────────────");
+                printf("\n౨ৎ Sorry! Invalid input for the third letter.");
+        }
+    } else {
+        printf("────────────────୨ৎ────────────────");
+        printf("\n౨ৎ Sorry! Your input is invalid.\n");
+        printf("\n/ᐠ ╥ ˕ ╥マ");
+    }
+
+    return 0;
+}
