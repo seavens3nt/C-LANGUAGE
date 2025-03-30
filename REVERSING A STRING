@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+void trimWhitespace(char str[]) {
+    int start = 0;
+    int end = strlen(str) - 1;
+
+    while (isspace((unsigned char)str[start])) start++;
+
+    while (end > start && isspace((unsigned char)str[end])) end--;
+
+    int length = end - start + 1;
+    memmove(str, str + start, length);
+    str[length] = '\0';
+}
+
+void reverseString(char str[]) {
+    int length = strlen(str);
+    for (int i = length - 1; i >= 0; i--) {
+        printf("%c", str[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    char str[1000];
+    char choice;
+
+    do {
+        printf("────────────────────────୨ৎ────────────────────────\n");
+        printf("\n♡ Enter a string: ");
+        fgets(str, 1000, stdin);
+
+        str[strcspn(str, "\n")] = 0;
+
+        trimWhitespace(str);
+
+        if (strlen(str) == 0) {
+            printf("\nʚ Invalid input! Please enter a non-empty string.\n");
+        } else {
+            printf("\nʚ Reversed string: ");
+            reverseString(str);
+        }
+
+        printf("\n────────────────────────୨ৎ────────────────────────\n");
+        printf("\n♡ Do you want to reverse another string? (y/n): ");
+        scanf(" %c", &choice);
+        getchar();
+
+    } while (choice == 'y' || choice == 'Y');
+
+    return 0;
+}
